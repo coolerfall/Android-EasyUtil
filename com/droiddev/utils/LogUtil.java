@@ -1,4 +1,4 @@
-package com.droiddev.utils
+package com.droiddev.utils;
 
 import android.util.Log;
 
