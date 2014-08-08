@@ -68,7 +68,7 @@ public class PreferenceUtils
 		return settings.getFloat(key, defaultValue);
 	}
 
-	public static void setSettingLong(Context context, final String key,
+	public static void setPrefLong(Context context, final String key,
 			final long value) {
 		final SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(context);
