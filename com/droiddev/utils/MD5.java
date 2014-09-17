@@ -1,5 +1,6 @@
-package com.droiddev.utils;
+package com.cooler.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -13,7 +14,8 @@ import android.util.Log;
  */
 public class MD5
 {
-	private static final String TAG = "MD5";
+    private static final String TAG = MD5.class.getSimpleName();
+	private static final String NULL = "";
 	
 	public static String Encrypt(String origin) {
 		MessageDigest md5 = null;
@@ -21,15 +23,16 @@ public class MD5
 		try {
 			md5 = MessageDigest.getInstance("MD5");
 		} catch (NoSuchAlgorithmException e) {
-			Log.d(TAG, "[md5 encrypt error]: " +e.getMessage());
-			e.printStackTrace();
-		}
+			Log.e(TAG, "[md5 encrypt error]: " + e.getMessage());
+			return NULL;
+		} 
 		
-		char[] charArray = origin.toCharArray();
-		byte[] byteArray = new byte[charArray.length];
-		
-		for (int i = 0; i < charArray.length; i ++) {
-			byteArray[i] = (byte) charArray[i];
+		byte[] byteArray = null;
+		try {
+			byteArray = origin.getBytes("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			Log.e(TAG, "[md5 encrypt error]: " + e.getMessage());
+			return NULL;
 		}
 		
 		byte[] md5Bytes = md5.digest(byteArray);
