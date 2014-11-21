@@ -14,11 +14,10 @@ import android.util.Base64;
  * SyncCrypt class: used to encrypt and decrypt data via AES.
  *
  * @author Vincent Cheung
- * @since Jan. 14, 2014
+ * @since  Jan. 14, 2014
  */
-public class AES
-{
-	private static final String SECRECT_KEY = "@rehpic*&^%$#@emknilsisiht#$%^&*";
+public class AES {
+	private static final String SECRECT_KEY = "@rehpic*&^%$#@easnilsisiht#$%^&*";
 	private static IvParameterSpec ivspec = null;
 	private static SecretKeySpec keyspec = null;
 	private static Cipher cipher = null;
@@ -26,8 +25,8 @@ public class AES
 	/**
 	 * Encrypt string.
 	 * 
-	 * @param  text      the string to be encrypted
-	 * @return           the encrypted an encoded string
+	 * @param text the string to be encrypted
+	 * @return the encrypted an encoded string
 	 * @throws Exception
 	 */
 	@SuppressLint("TrulyRandom")
@@ -39,7 +38,7 @@ public class AES
 		for (int i = 0; i < keyBytes.length && i < iv.length; i++) {
 			iv[i] = keyBytes[i];
 		}
-		
+
 		ivspec = new IvParameterSpec(iv);
 		keyspec = new SecretKeySpec(SECRECT_KEY.getBytes(), "AES");
 
@@ -50,8 +49,8 @@ public class AES
 		} catch (NoSuchPaddingException e) {
 			e.printStackTrace();
 		}
-		
-		if(text == null || text.length() == 0) {
+
+		if (text == null || text.length() == 0) {
 			throw new Exception("Empty string");
 		}
 
@@ -73,8 +72,8 @@ public class AES
 	/**
 	 * Decrypt string.
 	 * 
-	 * @param  text      the string to be decrypted
-	 * @return           the decrypted string
+	 * @param text the string to be decrypted
+	 * @return the decrypted string
 	 * @throws Exception
 	 */
 	public static String decrypt(String code) throws Exception {
@@ -85,7 +84,7 @@ public class AES
 		for (int i = 0; i < keyBytes.length && i < iv.length; i++) {
 			iv[i] = keyBytes[i];
 		}
-		
+
 		ivspec = new IvParameterSpec(iv);
 		keyspec = new SecretKeySpec(SECRECT_KEY.getBytes(), "AES");
 
@@ -96,8 +95,8 @@ public class AES
 		} catch (NoSuchPaddingException e) {
 			e.printStackTrace();
 		}
-		
-		if(code == null || code.length() == 0) {
+
+		if (code == null || code.length() == 0) {
 			throw new Exception("Empty string");
 		}
 
@@ -108,7 +107,7 @@ public class AES
 
 			cipher.init(Cipher.DECRYPT_MODE, keyspec, ivspec);
 			decrypted = cipher.doFinal(decode);
-		} catch (Exception e) {  
+		} catch (Exception e) {
 			throw new Exception("[decrypt] " + e.getMessage());
 		}
 
@@ -118,18 +117,18 @@ public class AES
 	/**
 	 * Convert byte to hex.
 	 * 
-	 * @param  data the data in byte
-	 * @return      the hex string
+	 * @param data the data in byte
+	 * @return the hex string
 	 */
 	public static String byteToHex(byte[] data) {
 		if (data == null) {
-			return null;  
+			return null;
 		}
 
 		int len = data.length;
 		String str = "";
-		for (int i = 0; i < len; i ++) {
-			if ((data[i] & 0xff )< 16)
+		for (int i = 0; i < len; i++) {
+			if ((data[i] & 0xff) < 16)
 				str = str + "0" + Integer.toHexString(data[i] & 0xff);
 			else
 				str = str + Integer.toHexString(data[i] & 0xff);
@@ -141,20 +140,19 @@ public class AES
 	/**
 	 * Convert hex to byte.
 	 * 
-	 * @param  data the data in byte
-	 * @return      the byte
+	 * @param data the data in byte
+	 * @return the byte
 	 */
 	public static byte[] hexToByte(String str) {
 		if (str == null) {
 			return null;
 		} else if (str.length() < 2) {
 			return null;
-		} else {  
+		} else {
 			int len = str.length() / 2;
 			byte[] buffer = new byte[len];
-			for (int i = 0; i < len; i ++) {
-				buffer[i] = (byte) Integer.parseInt(
-					str.substring(i * 2, i * 2 + 2), 16);  
+			for (int i = 0; i < len; i++) {
+				buffer[i] = (byte) Integer.parseInt(str.substring(i * 2, i * 2 + 2), 16);
 			}
 
 			return buffer;
