@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 /**
- * Shared preference util, it's easy to use like SpUtils.load(...).read(...).
+ * Shared preference util, it's easy to use like Prefers.load(...).read(...).
  * 
  * @author Vincent Cheung
  * @since  Oct. 29, 2014
@@ -49,23 +49,23 @@ public class Prefers {
 			sp.edit().putString(key, value).apply();
 		}
 		
-		public int read(String key, int defValue) {
+		public int readInt(String key, int defValue) {
 			return sp.getInt(key, defValue);
 		}
 		
-		public long read(String key, long defValue) {
+		public long readLong(String key, long defValue) {
 			return sp.getLong(key, defValue);
 		}
 		
-		public float read(String key, float defValue) {
+		public float readFloat(String key, float defValue) {
 			return sp.getFloat(key, defValue);
 		}
 		
-		public boolean read(String key, boolean defValue) {
+		public boolean readBoolean(String key, boolean defValue) {
 			return sp.getBoolean(key, defValue);
 		}
 		
-		public String read(String key, String defValue) {
+		public String readString(String key, String defValue) {
 			return sp.getString(key, defValue);
 		}
 		
