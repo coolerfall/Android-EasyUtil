@@ -49,23 +49,23 @@ public class Prefers {
 			sp.edit().putString(key, value).apply();
 		}
 		
-		public int readInt(String key, int defValue) {
+		public int getInt(String key, int defValue) {
 			return sp.getInt(key, defValue);
 		}
 		
-		public long readLong(String key, long defValue) {
+		public long getLong(String key, long defValue) {
 			return sp.getLong(key, defValue);
 		}
 		
-		public float readFloat(String key, float defValue) {
+		public float getFloat(String key, float defValue) {
 			return sp.getFloat(key, defValue);
 		}
 		
-		public boolean readBoolean(String key, boolean defValue) {
+		public boolean getBoolean(String key, boolean defValue) {
 			return sp.getBoolean(key, defValue);
 		}
 		
-		public String readString(String key, String defValue) {
+		public String getString(String key, String defValue) {
 			return sp.getString(key, defValue);
 		}
 		
