@@ -78,7 +78,7 @@ public class MetaData {
 	 * 
 	 * @return version name if existed, otherwise return default version.
 	 */
-	public String readVersionName(String defaultVer) {
+	public String getVersionName(String defaultVer) {
 		PackageInfo info = getPackageInfo(mContext);
 		return info != null ? info.versionName : defaultVer;
 	}
@@ -88,7 +88,7 @@ public class MetaData {
 	 * 
 	 * @return version code if existed, otherwise return 0.
 	 */
-	public int readVersionCode() {
+	public int getVersionCode() {
 		PackageInfo info = getPackageInfo(mContext);
 		return info != null ? info.versionCode : 0;
 	}
@@ -100,7 +100,7 @@ public class MetaData {
 	 * @param  defaultValue default value
 	 * @return              value if exists, otherwise return default value
 	 */
-	public String readString(String key, String defaultValue) {
+	public String getString(String key, String defaultValue) {
 		ApplicationInfo appInfo = getMetaData(mContext);
 		if (appInfo == null) {
 			return defaultValue;
@@ -115,7 +115,7 @@ public class MetaData {
 	 * @param  key key in manifest
 	 * @return     value if exists, otherwise return 0
 	 */
-	public int readInt(String key) {
+	public int getInt(String key) {
 		ApplicationInfo appInfo = getMetaData(mContext);
 		if (appInfo == null) {
 			return 0;
@@ -130,7 +130,7 @@ public class MetaData {
 	 * @param  key key in manifest
 	 * @return     value if exists, otherwise return 0
 	 */
-	public long readLong(String key) {
+	public long getLong(String key) {
 		ApplicationInfo appInfo = getMetaData(mContext);
 		if (appInfo == null) {
 			return 0;
@@ -145,7 +145,7 @@ public class MetaData {
 	 * @param  key key in manifest
 	 * @return     value if exists, otherwise return 0f
 	 */
-	public float readFloat(String key) {
+	public float getFloat(String key) {
 		ApplicationInfo appInfo = getMetaData(mContext);
 		if (appInfo == null) {
 			return 0f;
@@ -160,7 +160,7 @@ public class MetaData {
 	 * @param  key key in manifest
 	 * @return     value if exists, otherwise return false
 	 */
-	public boolean readBoolean(String key) {
+	public boolean getBoolean(String key) {
 		ApplicationInfo appInfo = getMetaData(mContext);
 		if (appInfo == null) {
 			return false;
