@@ -1,6 +1,12 @@
 package com.cooler.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel.MapMode;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -27,6 +33,12 @@ public class Crypto {
 	public static class MD5 {
 		private static final String NULL = "";
 
+		/**
+		 * Used to encrypt string to md5 hash.
+		 * 
+		 * @param  origin the string to be encrpted
+		 * @return        hash string
+		 */
 		public static String encrypt(String origin) {
 			MessageDigest md5 = null;
 
@@ -58,6 +70,45 @@ public class Crypto {
 			}
 
 			return hexValue.toString();
+		}
+		
+		/**
+		 * Caculate md5 hash of specifed file. This may spend some time, 
+		 * use new Thread if necessary.
+		 * 
+		 * @param  filepath the path of file
+		 * @return          md5 hash string
+		 */
+		public static String file(String filepath) {
+			File file = new File(filepath);
+			if (file == null || !file.exists()) {
+				return NULL;
+			}
+			
+			String result = NULL;
+			FileInputStream fis = null;
+			
+			try {
+				fis = new FileInputStream(file);
+				MappedByteBuffer mbf = fis.getChannel().map(MapMode.READ_ONLY, 0, file.length());
+				MessageDigest md5 = MessageDigest.getInstance("MD5");
+				md5.update(mbf);
+				BigInteger bi = new BigInteger(1, md5.digest());
+				result = bi.toString(16);
+			} catch (Exception e) {
+				Log.e(TAG, "[md5 encrypt error]: " + e.getMessage());
+				return NULL;
+			} finally {
+				if (fis != null) {
+					try {
+						fis.close();
+					} catch (IOException e) {
+						Log.e(TAG, "[md5 encrypt error]: " + e.getMessage());
+					}
+				}
+			}
+			
+			return result;
 		}
 	}
 	
