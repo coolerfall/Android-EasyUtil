@@ -1,13 +1,5 @@
 package com.cooler.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel.MapMode;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.Cipher;
@@ -27,78 +19,7 @@ import android.util.Log;
  */
 public class Crypto {
 	private static final String TAG = Crypto.class.getSimpleName();
-	/**
-	 * Md5 hash.
-	 */
-	public static class MD5 {
-		private static final String NULL = "";
 
-		/**
-		 * Used to encrypt string to md5 hash.
-		 * 
-		 * @param  origin the string to be encrpted
-		 * @return        hash string
-		 */
-		public static String hash(String origin) {
-			MessageDigest md5 = null;
-
-			try {
-				md5 = MessageDigest.getInstance("MD5");
-			} catch (NoSuchAlgorithmException e) {
-				Log.e(TAG, "[md5 encrypt error]: " + e.getMessage());
-				return NULL;
-			}
-
-			try {
-				md5.update(origin.getBytes("UTF-8"));
-				BigInteger bi = new BigInteger(1, md5.digest());
-				return bi.toString(16);
-			} catch (UnsupportedEncodingException e) {
-				Log.e(TAG, "[md5 encrypt error]: " + e.getMessage());
-				return NULL;
-			}
-		}
-		
-		/**
-		 * Caculate md5 hash of specifed file. This may spend some time, 
-		 * use new Thread if necessary.
-		 * 
-		 * @param  filepath the path of file
-		 * @return          md5 hash string
-		 */
-		public static String file(String filepath) {
-			File file = new File(filepath);
-			if (file == null || !file.exists()) {
-				return NULL;
-			}
-			
-			String result = NULL;
-			FileInputStream fis = null;
-			
-			try {
-				fis = new FileInputStream(file);
-				MappedByteBuffer mbf = fis.getChannel().map(MapMode.READ_ONLY, 0, file.length());
-				MessageDigest md5 = MessageDigest.getInstance("MD5");
-				md5.update(mbf);
-				BigInteger bi = new BigInteger(1, md5.digest());
-				result = bi.toString(16);
-			} catch (Exception e) {
-				Log.e(TAG, "[md5 encrypt error]: " + e.getMessage());
-				return NULL;
-			} finally {
-				if (fis != null) {
-					try {
-						fis.close();
-					} catch (IOException e) {
-						Log.e(TAG, "[md5 encrypt error]: " + e.getMessage());
-					}
-				}
-			}
-			
-			return result;
-		}
-	}
-	
 	/**
 	 * Aes crypto method.
 	 */
@@ -130,17 +51,15 @@ public class Crypto {
 
 			try {
 				cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
-			} catch (NoSuchPaddingException e) {
-				e.printStackTrace();
+			} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+				Log.d(TAG, "AES encrypt error: " + e.getMessage());
 			}
 
 			if (text == null || text.length() == 0) {
 				throw new Exception("Empty string");
 			}
 
-			byte[] encrypted = null;
+			byte[] encrypted;
 
 			try {
 				cipher.init(Cipher.ENCRYPT_MODE, keyspec, ivspec);
@@ -158,11 +77,11 @@ public class Crypto {
 		/**
 		 * Decrypt string.
 		 * 
-		 * @param text the string to be decrypted
+		 * @param  text the string to be decrypted
 		 * @return the decrypted string
 		 * @throws Exception
 		 */
-		public static String decrypt(String code) throws Exception {
+		public static String decrypt(String text) throws Exception {
 			/* get iv and key */
 			byte[] keyBytes = SECRECT_KEY.getBytes();
 			byte[] iv = new byte[16];
@@ -176,20 +95,18 @@ public class Crypto {
 
 			try {
 				cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
-			} catch (NoSuchPaddingException e) {
-				e.printStackTrace();
+			} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+				Log.d(TAG, "AES encrypt error: " + e.getMessage());
 			}
 
-			if (code == null || code.length() == 0) {
+			if (text == null || text.length() == 0) {
 				throw new Exception("Empty string");
 			}
 
-			byte[] decrypted = null;
+			byte[] decrypted;
 
 			try {
-				byte[] decode = Base64.decode(hexToByte(code), Base64.DEFAULT);
+				byte[] decode = Base64.decode(hexToByte(text), Base64.DEFAULT);
 
 				cipher.init(Cipher.DECRYPT_MODE, keyspec, ivspec);
 				decrypted = cipher.doFinal(decode);
@@ -203,7 +120,7 @@ public class Crypto {
 		/**
 		 * Convert byte to hex.
 		 * 
-		 * @param data the data in byte
+		 * @param  data the data in byte
 		 * @return the hex string
 		 */
 		public static String byteToHex(byte[] data) {
@@ -226,7 +143,7 @@ public class Crypto {
 		/**
 		 * Convert hex to byte.
 		 * 
-		 * @param data the data in byte
+		 * @param  str the data in byte
 		 * @return the byte
 		 */
 		public static byte[] hexToByte(String str) {
