@@ -1,7 +1,7 @@
 AndroidUtils
 ============
 
-Android util collection.
+Android util collection. There's some common utils: log, crypto, hash, file, meta data, shared preference and so on.
 
 ## License
 
