@@ -1,10 +1,10 @@
 package com.cooler.util;
 
+import android.util.Log;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-
-import android.util.Log;
 
 public class FileUtils {
 	private static final String TAG = FileUtils.class.getSimpleName();
@@ -34,6 +34,21 @@ public class FileUtils {
 			Log.e(TAG, "save file error: " + e.getMessage());
 		}
 	}
+
+	/**
+	 * Save content into the specified file.
+	 *
+	 * @param filename    absolute path
+	 * @param content     the content to save
+	 * @param shouldClear should clear the file first or not
+	 */
+	public static void write(String filename, String content, boolean shouldClear) {
+		if (shouldClear) {
+			delete(filename);
+		}
+
+		write(filename, content, "rw");
+	}
 	
 	/**
 	 * Save content into the specified file.
@@ -42,7 +57,17 @@ public class FileUtils {
 	 * @param content  the content to save
 	 */
 	public static void write(String filename, String content) {
-		write(filename, content, "rw");
+		write(filename, content, true);
+	}
+
+	/**
+	 Save content into the specified file.
+	 *
+	 * @param file    file
+	 * @param content the content to save
+	 */
+	public static void write(File file, String content) {
+		write(file.getAbsolutePath(), content, true);
 	}
 	
 	/**
