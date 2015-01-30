@@ -1,5 +1,6 @@
 package com.cooler.util;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -35,6 +36,22 @@ public class AppUtils {
 	private static final String APK_MANIFEST = "AndroidManifest.xml";
 
 	/**
+	 * Exit current app(clear memory).
+	 *
+	 * @param context context
+	 */
+	public static void exitApp(Context context) {
+		if (context == null) {
+			return;
+		}
+
+		ActivityManager manager = (ActivityManager) context
+				.getSystemService(Context.ACTIVITY_SERVICE);
+		manager.killBackgroundProcesses(context.getPackageName());
+		System.exit(0);
+	}
+
+	/**
 	 * To check whether the apk file has installed.
 	 * 
 	 * @param  context the context
@@ -56,6 +73,26 @@ public class AppUtils {
 				if (pkgName.equals(info.packageName)) {
 					return true;
 				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * To check if the specified service is running.
+	 *
+	 * @param  context   the context
+	 * @param  className class name of service
+	 * @return           true if the service is running
+	 */
+	public static boolean isServiceRunning(Context context, String className) {
+		ActivityManager manager = (ActivityManager) context
+				.getSystemService(Context.ACTIVITY_SERVICE);
+		for (ActivityManager.RunningServiceInfo info : manager
+				.getRunningServices(Integer.MAX_VALUE)) {
+			if (info.service.getClassName().equals(className)) {
+				return true;
 			}
 		}
 
