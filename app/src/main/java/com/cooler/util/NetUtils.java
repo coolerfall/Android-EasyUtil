@@ -1,13 +1,15 @@
 package com.cooler.util;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 
 /**
  * Net utils: contains some network utils.
@@ -30,11 +32,21 @@ public class NetUtils {
 		ConnectivityManager manager = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo info = manager.getActiveNetworkInfo();
-		if (info == null) {
-			return false;
-		}
-		
-		return info.isAvailable();
+
+		return info == null ? false : info.isAvailable();
+	}
+
+	/**
+	 * Open default browser with url.
+	 *
+	 * @param context context
+	 * @param url     url to open
+	 */
+	public static void openBrowser(Context context, String url) {
+		Intent intent = new Intent();
+		intent.setAction(Intent.ACTION_VIEW);
+		intent.setData(Uri.parse(url));
+		context.startActivity(intent);
 	}
 	
 	/**
@@ -54,7 +66,7 @@ public class NetUtils {
 			InputStream is = process.getInputStream();
 			BufferedReader bf = new BufferedReader(new InputStreamReader(is));
 			StringBuffer buffer = new StringBuffer();
-			String content = "";
+			String content;
 			while ((content = bf.readLine()) != null) {
 				buffer.append(content);
 				buffer.append("\n");
