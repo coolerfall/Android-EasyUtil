@@ -1,7 +1,9 @@
 package com.cooler.util;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.preference.PreferenceManager;
 
 /**
@@ -98,32 +100,46 @@ public class Prefers {
 		
 		return sInstance;
 	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private SharedPreferences getPreferHoney(Context context, String preferName) {
+		return context.getSharedPreferences(preferName, Context.MODE_MULTI_PROCESS);
+	}
+
+	/** get shared preferences according to api */
+	private SharedPreferences getPrefer(Context context, String preferName) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			return getPreferHoney(context, preferName);
+		}
+
+		return context.getSharedPreferences(preferName, Context.MODE_PRIVATE);
+	}
 	
 	/**
 	 * Load default shared preferences(packagename_preferences).
 	 * 
-	 * @return {@link #PreferFile}
+	 * @return {@link PreferFile}
 	 */
 	public PreferFile load() {
 		if (sInstance == null) {
 			throw new IllegalStateException("call with(context) first");
 		}
-		
+
 		if (mContext == null) {
 			throw new IllegalArgumentException("context cannot be null");
 		}
-		
+
 		SharedPreferences sp = PreferenceManager
 				.getDefaultSharedPreferences(mContext);
-		
+
 		return new PreferFile(sp);
 	}
-	
+
 	/**
 	 * Load shared preferences according to prefer name.
-	 * 
+	 *
 	 * @param  preferName the name of shared preference
-	 * @return            {@link #PreferFile}
+	 * @return            {@link PreferFile}
 	 */
 	public PreferFile load(String preferName) {
 		if (sInstance == null) {
@@ -134,8 +150,7 @@ public class Prefers {
 			throw new IllegalArgumentException("context cannot be null");
 		}
 		
-		SharedPreferences sp = mContext.getSharedPreferences(
-				preferName, Context.MODE_PRIVATE);
+		SharedPreferences sp = getPrefer(mContext, preferName);
 		
 		return new PreferFile(sp);
 	}
