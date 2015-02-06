@@ -25,6 +25,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.InvalidPropertiesFormatException;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
@@ -35,7 +36,6 @@ import javax.xml.parsers.ParserConfigurationException;
 /**
  * Properties utils, it's easy to use like Propers.load(...).get..(...).
  * This is used to be instead of shared preference cause it's muti-process problem.
- * It was saved in sdcard/Android/data/packagename/files/properties by default.
  *
  * @author Vincent Cheung
  * @since  Feb. 05, 2014
@@ -72,7 +72,7 @@ public class Propers {
 	/** custom xml properties */
 	private class XMLProperties extends Properties {
 		private static final String PROP_DTD_NAME = "http://java.sun.com/dtd/properties.dtd";
-		private static final String PROP_DTD = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+		private static final String PROP_DTD = "<?xml version=\'1.0\' encoding=\'utf-8\'?>"
 				+ "    <!ELEMENT properties (comment?, entry*) >"
 				+ "    <!ATTLIST properties version CDATA #FIXED \"1.0\" >"
 				+ "    <!ELEMENT comment (#PCDATA) >"
@@ -179,23 +179,23 @@ public class Propers {
 			} catch (IllegalCharsetNameException e) {
 				System.out.println("Warning: encoding name " + encoding
 						+ " is illegal, using UTF-8 as default encoding");
-				encodingCanonicalName = "UTF-8";
+				encodingCanonicalName = "utf-8";
 			} catch (UnsupportedCharsetException e) {
 				System.out.println("Warning: encoding " + encoding
 						+ " is not supported, using UTF-8 as default encoding");
-				encodingCanonicalName = "UTF-8";
+				encodingCanonicalName = "utf-8";
 			}
 
 			PrintStream printStream = new PrintStream(os, false,
 					encodingCanonicalName);
 
-			printStream.print("<?xml version=\"1.0\" encoding=\"");
-			printStream.print(encodingCanonicalName);
-			printStream.println("\"?>");
+			printStream.print("<?xml version=\'1.0\' encoding=\'");
+			printStream.print(encodingCanonicalName.toLowerCase(Locale.US));
+			printStream.println("\'?>");
 
-			printStream.print("<!DOCTYPE properties SYSTEM \"");
+			printStream.print("<!DOCTYPE properties SYSTEM \'");
 			printStream.print(PROP_DTD_NAME);
-			printStream.println("\">");
+			printStream.println("\'>");
 
 			printStream.println("<map>");
 
