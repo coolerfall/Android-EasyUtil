@@ -467,7 +467,7 @@ public class Propers {
 	 *
 	 * @param properDir      absolute directory
 	 * @param properFileName file name
-	 * @return               {@link com.earth.tool.Propers.Property}
+	 * @return               {@link Property}
 	 */
 	public Property load(String properDir, String properFileName) {
 		return new Property(properDir + File.separator + properFileName);
@@ -477,7 +477,7 @@ public class Propers {
 	 * Load properties from file system.
 	 *
 	 * @param  properFileName the name of property file
-	 * @return                {@link com.earth.tool.Propers.Property}
+	 * @return                {@link Property}
 	 */
 	public Property load(String properFileName) {
 		return new Property(getPropertyFilePath(mContext, properFileName));
@@ -486,7 +486,7 @@ public class Propers {
 	/**
 	 * Load properties from file system with default name.
 	 *
-	 * @return {@link com.earth.tool.Propers.Property}
+	 * @return {@link Property}
 	 */
 	public Property load() {
 		return new Property(getPropertyFilePath(mContext, null));
