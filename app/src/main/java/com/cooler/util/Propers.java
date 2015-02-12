@@ -326,7 +326,7 @@ public class Propers {
 				properties.loadFromXML(fis);
 				fis.close();
 			} catch (IOException e) {
-				Log.e(TAG, "load properties errror: " + e.getMessage());
+				/* ignore */
 			}
 
 			return properties;
@@ -459,7 +459,14 @@ public class Propers {
 		properFileName = (TextUtils.isEmpty(properFileName) ?
 			 context.getPackageName() + "_" + PROPERTY_NAME : properFileName) + XML_SUFFIX;
 
-		return context.getExternalFilesDir(PROPERTY_NAME) + File.separator + properFileName;
+		String dirPath = context.getFilesDir() + File.separator + PROPERTY_NAME;
+		File dir = new File(dirPath);
+		if (!dir.exists()) {
+			dir.mkdir();
+		}
+
+		return context.getFilesDir() + File.separator + PROPERTY_NAME +
+				File.separator + properFileName;
 	}
 
 	/**
@@ -470,6 +477,12 @@ public class Propers {
 	 * @return               {@link Property}
 	 */
 	public Property load(String properDir, String properFileName) {
+		String dirPath = properDir + File.separator + PROPERTY_NAME;
+		File dir = new File(dirPath);
+		if (!dir.exists()) {
+			dir.mkdir();
+		}
+
 		return new Property(properDir + File.separator + properFileName);
 	}
 
