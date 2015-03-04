@@ -24,7 +24,9 @@ import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.UnsupportedCharsetException;
+import java.util.HashMap;
 import java.util.InvalidPropertiesFormatException;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
@@ -425,6 +427,25 @@ public class Propers {
 		public String getString(String key, String defaultValue) {
 			String value = (String) load(mProperFilePath).get(key);
 			return value == null ? defaultValue : value;
+		}
+
+		/**
+		 * Get all the key/value in properties.
+		 *
+		 * @return all key/value
+		 */
+		public Map<String, Object> getAll() {
+			HashMap<String, Object> all = new HashMap<>();
+			XMLProperties properties = load(mProperFilePath);
+
+			for (Iterator it = properties.keySet().iterator(); it.hasNext();) {
+				String key = (String) it.next();
+				Object value = properties.get(key);
+
+				all.put(key, value);
+			}
+
+			return all;
 		}
 
 		/**
