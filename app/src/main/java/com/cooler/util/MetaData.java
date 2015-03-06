@@ -61,13 +61,13 @@ public class MetaData {
 			throw new IllegalStateException("call with(context) first");
 		}
 		
-		if (mContext == null) {
+		if (context == null) {
 			throw new IllegalArgumentException("context cannot be null");
 		}
 		
 		try {
-			return mContext.getPackageManager()
-					.getPackageInfo(mContext.getPackageName(), 0);
+			return context.getPackageManager()
+					.getPackageInfo(context.getPackageName(), 0);
 		} catch (NameNotFoundException e) {
 			return null;
 		}
@@ -78,9 +78,9 @@ public class MetaData {
 	 * 
 	 * @return version name if existed, otherwise return default version.
 	 */
-	public String getVersionName() {
+	public String getVersionName(String defaultVer) {
 		PackageInfo info = getPackageInfo(mContext);
-		return info != null ? info.versionName : "";
+		return info != null ? info.versionName : defaultVer;
 	}
 	
 	/**
@@ -102,11 +102,7 @@ public class MetaData {
 	 */
 	public String getString(String key, String defaultValue) {
 		ApplicationInfo appInfo = getMetaData(mContext);
-		if (appInfo == null) {
-			return defaultValue;
-		}
-		
-		return appInfo.metaData.getString(key).trim();
+		return appInfo == null ? defaultValue : appInfo.metaData.getString(key).trim();
 	}
 	
 	/**
@@ -117,11 +113,7 @@ public class MetaData {
 	 */
 	public int getInt(String key) {
 		ApplicationInfo appInfo = getMetaData(mContext);
-		if (appInfo == null) {
-			return 0;
-		}
-		
-		return appInfo.metaData.getInt(key);
+		return appInfo == null ? 0 : appInfo.metaData.getInt(key);
 	}
 	
 	/**
@@ -132,11 +124,7 @@ public class MetaData {
 	 */
 	public long getLong(String key) {
 		ApplicationInfo appInfo = getMetaData(mContext);
-		if (appInfo == null) {
-			return 0;
-		}
-		
-		return appInfo.metaData.getLong(key);
+		return appInfo == null ? 0 : appInfo.metaData.getLong(key);
 	}
 	
 	/**
@@ -147,11 +135,7 @@ public class MetaData {
 	 */
 	public float getFloat(String key) {
 		ApplicationInfo appInfo = getMetaData(mContext);
-		if (appInfo == null) {
-			return 0f;
-		}
-		
-		return appInfo.metaData.getFloat(key);
+		return appInfo == null ? 0f : appInfo.metaData.getFloat(key);
 	}
 	
 	/**
@@ -162,11 +146,7 @@ public class MetaData {
 	 */
 	public boolean getBoolean(String key) {
 		ApplicationInfo appInfo = getMetaData(mContext);
-		if (appInfo == null) {
-			return false;
-		}
-		
-		return appInfo.metaData.getBoolean(key);
+		return appInfo != null && appInfo.metaData.getBoolean(key);
 	}
 	
 	/**
@@ -177,10 +157,6 @@ public class MetaData {
 	 */
 	public boolean contains(String key) {
 		ApplicationInfo appInfo = getMetaData(mContext);
-		if (appInfo == null) {
-			return false;
-		}
-		
-		return appInfo.metaData.containsKey(key);
+		return appInfo != null && appInfo.metaData.containsKey(key);
 	}
 }
