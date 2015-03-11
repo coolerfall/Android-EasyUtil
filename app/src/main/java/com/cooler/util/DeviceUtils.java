@@ -100,7 +100,7 @@ public class DeviceUtils {
 	 *
 	 * @return mobile model
 	 */
-	public static String model() {
+	public static String getModel() {
 		Field[] fields = Build.class.getDeclaredFields();
 		try {
 			for (Field field : fields) {

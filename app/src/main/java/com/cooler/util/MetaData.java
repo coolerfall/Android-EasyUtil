@@ -78,9 +78,9 @@ public class MetaData {
 	 * 
 	 * @return version name if existed, otherwise return default version.
 	 */
-	public String getVersionName(String defaultVer) {
+	public String getVersionName() {
 		PackageInfo info = getPackageInfo(mContext);
-		return info != null ? info.versionName : defaultVer;
+		return info != null ? info.versionName : "N/A";
 	}
 	
 	/**

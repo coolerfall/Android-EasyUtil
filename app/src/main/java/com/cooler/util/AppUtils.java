@@ -36,7 +36,8 @@ public class AppUtils {
 	private static final String APK_MANIFEST = "AndroidManifest.xml";
 
 	/**
-	 * Exit current app(clear memory).
+	 * Exit current app(clear memory). This util needs
+	 * `android.permission.KILL_BACKGROUND_PROCESSES` permission.
 	 *
 	 * @param context context
 	 */
@@ -81,6 +82,7 @@ public class AppUtils {
 
 	/**
 	 * To check if the specified service is running.
+	 * This util needs `android.permission.GET_TASKS` permission.
 	 *
 	 * @param  context   the context
 	 * @param  className class name of service
