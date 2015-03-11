@@ -35,7 +35,7 @@ public class Logx {
 	/**
 	 * Output verbose logs.
 	 * 
-	 * @see {@link android.util.Log#v}
+	 * @see android.util.Log#v
 	 */
 	public static void v(String tag, String msg) {
 		if (sDebug)
@@ -45,7 +45,7 @@ public class Logx {
 	/**
 	 * Output debug logs.
 	 * 
-	 * @see {@link android.util.Log#d}
+	 * @see android.util.Log#d
 	 */
 	public static void d(String tag, String msg) {
 		if (sDebug)
@@ -55,7 +55,7 @@ public class Logx {
 	/**
 	 * Output information logs.
 	 * 
-	 * @see {@link android.util.Log#i}
+	 * @see android.util.Log#i
 	 */
 	public static void i(String tag, String msg) {
 		if (sDebug)
@@ -65,7 +65,7 @@ public class Logx {
 	/**
 	 * Output warning logs.
 	 * 
-	 * @see {@link android.util.Log#w}
+	 * @see android.util.Log#w
 	 */
 	public static void w(String tag, String msg) {
 		if (sDebug)
@@ -74,8 +74,8 @@ public class Logx {
 
 	/**
 	 * Output error logs.
-	 * 
-	 * @see {@link android.util.Log#e}
+	 *
+	 * @see android.util.Log#e
 	 */
 	public static void e(String tag, String msg) {
 		if (sDebug)
@@ -85,7 +85,7 @@ public class Logx {
 	/**
 	 * Output verbose logs.
 	 * 
-	 * @see {@link #v}
+	 * @see #v
 	 */
 	public static void v(String msg) {
 		v(sTag, msg);
@@ -94,7 +94,7 @@ public class Logx {
 	/**
 	 * Output debug logs.
 	 * 
-	 * @see {@link #d}
+	 * @see #d
 	 */
 	public static void d(String msg) {
 		d(sTag, msg);
@@ -103,7 +103,7 @@ public class Logx {
 	/**
 	 * Output information logs.
 	 * 
-	 * @see {@link #i}
+	 * @see #i
 	 */
 	public static void i(String msg) {
 		i(sTag, msg);
@@ -112,7 +112,7 @@ public class Logx {
 	/**
 	 * Output warning logs.
 	 * 
-	 * @see {@link #w}
+	 * @see #w
 	 */
 	public static void w(String msg) {
 		w(sTag, msg);
@@ -121,7 +121,7 @@ public class Logx {
 	/**
 	 * Output error logs.
 	 * 
-	 * @see {@link #e}
+	 * @see #e
 	 */
 	public static void e(String msg) {
 		e(sTag, msg);
@@ -130,7 +130,7 @@ public class Logx {
 	/**
 	 * Output verbose logs.
 	 * 
-	 * @see {@link #v}
+	 * @see #v
 	 */
 	public static void v(Class<?> clazz, String msg) {
 		v(clazz.getName(), msg);
@@ -139,7 +139,7 @@ public class Logx {
 	/**
 	 * Output debug logs.
 	 * 
-	 * @see {@link #d}
+	 * @see #d
 	 */
 	public static void d(Class<?> clazz, String msg) {
 		d(clazz.getName(), msg);
@@ -148,7 +148,7 @@ public class Logx {
 	/**
 	 * Output information logs.
 	 * 
-	 * @see {@link #i}
+	 * @see #i
 	 */
 	public static void i(Class<?> clazz, String msg) {
 		i(clazz.getName(), msg);
@@ -157,7 +157,7 @@ public class Logx {
 	/**
 	 * Output warning logs.
 	 * 
-	 * @see {@link #w}
+	 * @see #w
 	 */
 	public static void w(Class<?> clazz, String msg) {
 		w(clazz.getName(), msg);
@@ -166,7 +166,7 @@ public class Logx {
 	/**
 	 * Output error logs.
 	 * 
-	 * @see {@link #e}
+	 * @see #e
 	 */
 	public static void e(Class<?> clazz, String msg) {
 		e(clazz.getName(), msg);
