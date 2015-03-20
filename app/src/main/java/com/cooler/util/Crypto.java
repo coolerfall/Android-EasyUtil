@@ -1,15 +1,18 @@
 package com.cooler.util;
 
+import android.annotation.SuppressLint;
+import android.util.Base64;
+
+import java.nio.charset.Charset;
 import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.Cipher;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
-
-import android.annotation.SuppressLint;
-import android.util.Base64;
-import android.util.Log;
 
 /**
  * Contains some crypto method and hash method.
@@ -37,7 +40,7 @@ public class Crypto {
 		 * @throws Exception
 		 */
 		@SuppressLint("TrulyRandom")
-		public static String encrypt(String text) throws Exception {
+		public static String encrypt(String text) {
 			/* get iv and key */
 			byte[] keyBytes = SECRECT_KEY.getBytes();
 			byte[] iv = new byte[16];
@@ -51,12 +54,14 @@ public class Crypto {
 
 			try {
 				cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-				Log.d(TAG, "AES encrypt error: " + e.getMessage());
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (NoSuchPaddingException e) {
+				e.printStackTrace();
 			}
 
 			if (text == null || text.length() == 0) {
-				throw new Exception("Empty string");
+				return "";
 			}
 
 			byte[] encrypted;
@@ -65,7 +70,7 @@ public class Crypto {
 				cipher.init(Cipher.ENCRYPT_MODE, keyspec, ivspec);
 				encrypted = cipher.doFinal(text.getBytes());
 			} catch (Exception e) {
-				throw new Exception("[encrypt] " + e.getMessage());
+				return "";
 			}
 
 			/* encode with base64 */
@@ -95,8 +100,10 @@ public class Crypto {
 
 			try {
 				cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-			} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-				Log.d(TAG, "AES encrypt error: " + e.getMessage());
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (NoSuchPaddingException e) {
+				e.printStackTrace();
 			}
 
 			if (text == null || text.length() == 0) {
@@ -159,6 +166,56 @@ public class Crypto {
 				}
 
 				return buffer;
+			}
+		}
+	}
+
+	/**
+	 * DES crypt class.
+	 */
+	public static class DES {
+		/**
+		 * Encypt text with specified key.
+		 *
+		 * @param  key  the key to encryt
+		 * @param  text original string
+		 * @return      encrypted base64 string
+		 */
+		public static String encrypt(String key, String text) {
+			byte[] keyBytes = key.getBytes();
+			try {
+				DESKeySpec desKeySpec = new DESKeySpec(keyBytes);
+				IvParameterSpec ivSpec = new IvParameterSpec(keyBytes);
+				SecretKeyFactory factory = SecretKeyFactory.getInstance("DES");
+				SecretKey secretKeykey = factory.generateSecret(desKeySpec);
+				Cipher cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
+				cipher.init(Cipher.ENCRYPT_MODE, secretKeykey, ivSpec);
+				byte[] origData =  text.getBytes(Charset.forName("UTF-8"));
+				byte[] encrypted = cipher.doFinal(origData);
+				byte encoded[] = Base64.encode(encrypted, Base64.DEFAULT);
+
+				return new String(encoded);
+			} catch (Exception e) {
+				return "";
+			}
+		}
+
+		public static String decrypt(String key, String text) {
+			byte[] keyBytes = key.getBytes();
+			try {
+				DESKeySpec desKeySpec = new DESKeySpec(keyBytes);
+				IvParameterSpec ivSpec = new IvParameterSpec(keyBytes);
+				SecretKeyFactory factory = SecretKeyFactory.getInstance("DES");
+				SecretKey secretKeykey = factory.generateSecret(desKeySpec);
+				Cipher cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
+				cipher.init(Cipher.DECRYPT_MODE, secretKeykey, ivSpec);
+
+				byte[] decode = Base64.decode(text.getBytes(Charset.forName("UTF-8")), Base64.DEFAULT);
+				byte[] result = cipher.doFinal(decode);
+
+				return new String(result);
+			} catch (Exception e) {
+				return "";
 			}
 		}
 	}
