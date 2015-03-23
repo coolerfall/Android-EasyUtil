@@ -1,4 +1,4 @@
-package com.cooler.util;
+package com.coolerfall.utils;
 
 import android.annotation.TargetApi;
 import android.content.Context;
