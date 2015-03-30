@@ -5,11 +5,17 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
 
 /**
  * Net utils: contains some network utils.
@@ -34,6 +40,45 @@ public class NetUtils {
 		NetworkInfo info = manager.getActiveNetworkInfo();
 
 		return info == null ? false : info.isAvailable();
+	}
+
+	/**
+	 * Get the ip of current mobile device. This util needs
+	 * "android.permission.ACCESS_WIFI_STATE" and "android.permission.INTERNET" permission.
+	 */
+	public static String getIp(Context context) {
+		WifiManager manager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+		String ipAddress = "0.0.0.0";
+
+		if (manager == null) {
+			return ipAddress;
+		}
+
+		if (manager.isWifiEnabled()) {
+			WifiInfo info = manager.getConnectionInfo();
+			int ip = info.getIpAddress();
+			ipAddress = (ip & 0xff) + "." + ((ip >> 8) & 0xff) + "." +
+					((ip >> 16) & 0xff) + "." + ((ip >> 24) & 0xff);
+		} else {
+			try {
+				Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
+				for (; en.hasMoreElements();) {
+					NetworkInterface nitf = en.nextElement();
+					Enumeration<InetAddress> inetAddrs = nitf.getInetAddresses();
+					for (;inetAddrs.hasMoreElements();) {
+						InetAddress inetAddr = inetAddrs.nextElement();
+						if (!inetAddr.isLoopbackAddress()) {
+							ipAddress = inetAddr.getHostAddress();
+							break;
+						}
+					}
+				}
+			} catch (SocketException e) {
+				/* ignore */
+			}
+		}
+
+		return ipAddress;
 	}
 
 	/**
