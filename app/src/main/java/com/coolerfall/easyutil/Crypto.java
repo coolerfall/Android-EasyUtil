@@ -37,7 +37,6 @@ public class Crypto {
 		 * 
 		 * @param text the string to be encrypted
 		 * @return the encrypted an encoded string
-		 * @throws Exception
 		 */
 		@SuppressLint("TrulyRandom")
 		public static String encrypt(String text) {
@@ -55,9 +54,9 @@ public class Crypto {
 			try {
 				cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
+				return "";
 			} catch (NoSuchPaddingException e) {
-				e.printStackTrace();
+				return "";
 			}
 
 			if (text == null || text.length() == 0) {
@@ -101,9 +100,9 @@ public class Crypto {
 			try {
 				cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
+				return "";
 			} catch (NoSuchPaddingException e) {
-				e.printStackTrace();
+				return "";
 			}
 
 			if (text == null || text.length() == 0) {
