@@ -6,6 +6,9 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 /**
  * Shared preference util, it's easy to use like Prefers.load(...).read(...).
  * 
@@ -70,7 +73,156 @@ public class Prefers {
 		public String getString(String key, String defValue) {
 			return sp.getString(key, defValue);
 		}
-		
+
+		public void saveArray(String key, int[] array) {
+			JSONArray json = new JSONArray();
+			for (int value : array) {
+				json.put(value);
+			}
+
+			save(key, json.toString());
+		}
+
+		public void saveArray(String key, long[] array) {
+			JSONArray json = new JSONArray();
+			for (long value : array) {
+				json.put(value);
+			}
+
+			save(key, json.toString());
+		}
+
+		public void saveArray(String key, float[] array) {
+			JSONArray json = new JSONArray();
+			for (float value : array) {
+				try {
+					json.put(value);
+				} catch (JSONException e) {
+					return;
+				}
+			}
+
+			save(key, json.toString());
+		}
+
+		public void saveArray(String key, boolean[] array) {
+			JSONArray json = new JSONArray();
+			for (boolean value : array) {
+				json.put(value);
+			}
+
+			save(key, json.toString());
+		}
+
+		public void saveArray(String key, String[] array) {
+			JSONArray json = new JSONArray();
+			for (String value : array) {
+				json.put(value);
+			}
+
+			save(key, json.toString());
+		}
+
+		public int[] getIntArray(String key, int[] defValue) {
+			int[] array;
+			String json = getString(key, null);
+			if (json == null) {
+				return defValue;
+			}
+
+			try {
+				JSONArray jsonArr = new JSONArray(json);
+				array = new int[jsonArr.length()];
+				for (int i = 0; i < array.length; i ++) {
+					array[i] = jsonArr.getInt(i);
+				}
+			} catch (JSONException e) {
+				return defValue;
+			}
+
+			return array;
+		}
+
+		public long[] getLongArray(String key, long[] defValue) {
+			long[] array;
+			String json = getString(key, null);
+			if (json == null) {
+				return defValue;
+			}
+
+			try {
+				JSONArray jsonArr = new JSONArray(json);
+				array = new long[jsonArr.length()];
+				for (int i = 0; i < array.length; i ++) {
+					array[i] = jsonArr.getLong(i);
+				}
+			} catch (JSONException e) {
+				return defValue;
+			}
+
+			return array;
+		}
+
+		public float[] getFloatArray(String key, float[] defValue) {
+			float[] array;
+			String json = getString(key, null);
+			if (json == null) {
+				return defValue;
+			}
+
+			try {
+				JSONArray jsonArr = new JSONArray(json);
+				array = new float[jsonArr.length()];
+				for (int i = 0; i < array.length; i ++) {
+					array[i] = (float)jsonArr.getDouble(i);
+				}
+			} catch (JSONException e) {
+				return defValue;
+			}
+
+			return array;
+		}
+
+		public boolean[] getBooleanArray(String key, boolean[] defValue) {
+			boolean[] array;
+			String json = getString(key, null);
+			if (json == null) {
+				return defValue;
+			}
+
+			try {
+				JSONArray jsonArr = new JSONArray(json);
+				array = new boolean[jsonArr.length()];
+				for (int i = 0; i < array.length; i ++) {
+					array[i] = jsonArr.getBoolean(i);
+				}
+			} catch (JSONException e) {
+				return defValue;
+			}
+
+			return array;
+		}
+
+		public String[] getStringArray(String key, String[] defValue) {
+			String[] array;
+			String json = getString(key, null);
+			if (json == null) {
+				return defValue;
+			}
+
+			try {
+				JSONArray jsonArr = new JSONArray(json);
+				array = new String[jsonArr.length()];
+				for (int i = 0; i < array.length; i ++) {
+					array[i] = jsonArr.getString(i);
+				}
+			} catch (JSONException e) {
+				return defValue;
+			}
+
+			return array;
+		}
+
 		public boolean contains(String key) {
 			return sp.contains(key);
 		}
