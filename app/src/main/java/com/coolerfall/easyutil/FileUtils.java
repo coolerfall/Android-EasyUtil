@@ -16,6 +16,7 @@ public class FileUtils {
 	 * @param content  content
 	 * @param mode     the file access mode, either "r", "rw", "rws" or "rwd".
 	 */
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static void write(String filename, String content, String mode) {
 		try {
 			File file = new File(filename);
@@ -101,6 +102,7 @@ public class FileUtils {
 	 * 
 	 * @param filename absolute path
 	 */
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public static void delete(String filename) {
 		File file = new File(filename);
 		if (!file.exists()) {
@@ -108,5 +110,37 @@ public class FileUtils {
 		}
 		
 		file.delete();
+	}
+
+	/**
+	 * Get the extension for the specified file.
+	 *
+	 * @param  filePath file path
+	 * @return          extension of file or empty if file has no extension
+	 */
+	public static String getExtention(String filePath) {
+		return getExtention(new File(filePath));
+	}
+
+	/**
+	 * Get the extension for the specified file.
+	 *
+	 * @param  file file to get extension
+	 * @return      extension of file or empty if file has no extension
+	 */
+	public static String getExtention(File file) {
+		String ext = "";
+
+		if (!file.exists()) {
+			return ext;
+		}
+
+		String filename = file.getName();
+		int index = filename.lastIndexOf(".");
+		if (index != -1 && index != 0) {
+			ext = filename.substring(index+1);
+		}
+
+		return ext;
 	}
 }
