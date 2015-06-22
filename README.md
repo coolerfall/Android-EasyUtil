@@ -5,7 +5,7 @@ Android util collection. There's some common utils: log, crypto, hash, file, met
 
 ## License
 
-    Copyright (C) 2014 Vincent Chueng
+    Copyright (C) 2014-2015 Vincent Chueng
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
