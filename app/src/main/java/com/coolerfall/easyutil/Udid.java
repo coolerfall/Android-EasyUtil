@@ -42,7 +42,7 @@ public class Udid {
 	/**
 	 * Get udid, this may spend some time, use thread if necessary.
 	 * 
-	 * @return udid
+	 * @return udid udid string
 	 */
 	public String fetch() {
 		generateOpenUdid();

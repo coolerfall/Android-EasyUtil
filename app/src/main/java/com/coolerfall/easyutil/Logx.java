@@ -34,7 +34,10 @@ public class Logx {
 	
 	/**
 	 * Output verbose logs.
-	 * 
+	 *
+	 * @param tag Used to identify the source of a log message.  It usually identifies
+	 *        the class or activity where the log call occurs.
+	 * @param msg The message you would like logged.
 	 * @see android.util.Log#v
 	 */
 	public static void v(String tag, String msg) {
@@ -44,7 +47,10 @@ public class Logx {
 	
 	/**
 	 * Output debug logs.
-	 * 
+	 *
+	 * @param tag Used to identify the source of a log message.  It usually identifies
+	 *        the class or activity where the log call occurs.
+	 * @param msg The message you would like logged.
 	 * @see android.util.Log#d
 	 */
 	public static void d(String tag, String msg) {
@@ -54,7 +60,10 @@ public class Logx {
 	
 	/**
 	 * Output information logs.
-	 * 
+	 *
+	 * @param tag Used to identify the source of a log message.  It usually identifies
+	 *        the class or activity where the log call occurs.
+	 * @param msg The message you would like logged.
 	 * @see android.util.Log#i
 	 */
 	public static void i(String tag, String msg) {
@@ -64,7 +73,10 @@ public class Logx {
 	
 	/**
 	 * Output warning logs.
-	 * 
+	 *
+	 * @param tag Used to identify the source of a log message.  It usually identifies
+	 *        the class or activity where the log call occurs.
+	 * @param msg The message you would like logged.
 	 * @see android.util.Log#w
 	 */
 	public static void w(String tag, String msg) {
@@ -74,7 +86,10 @@ public class Logx {
 
 	/**
 	 * Output error logs.
-	 *
+
+	 * @param tag Used to identify the source of a log message.  It usually identifies
+	 *        the class or activity where the log call occurs.
+	 * @param msg The message you would like logged.
 	 * @see android.util.Log#e
 	 */
 	public static void e(String tag, String msg) {
@@ -84,7 +99,8 @@ public class Logx {
 	
 	/**
 	 * Output verbose logs.
-	 * 
+	 *
+	 * @param msg The message you would like logged.
 	 * @see #v
 	 */
 	public static void v(String msg) {
@@ -93,7 +109,8 @@ public class Logx {
 	
 	/**
 	 * Output debug logs.
-	 * 
+	 *
+	 * @param msg The message you would like logged.
 	 * @see #d
 	 */
 	public static void d(String msg) {
@@ -102,7 +119,8 @@ public class Logx {
 	
 	/**
 	 * Output information logs.
-	 * 
+	 *
+	 * @param msg The message you would like logged.
 	 * @see #i
 	 */
 	public static void i(String msg) {
@@ -111,7 +129,8 @@ public class Logx {
 	
 	/**
 	 * Output warning logs.
-	 * 
+	 *
+	 * @param msg The message you would like logged.
 	 * @see #w
 	 */
 	public static void w(String msg) {
@@ -120,7 +139,8 @@ public class Logx {
 
 	/**
 	 * Output error logs.
-	 * 
+	 *
+	 * @param msg The message you would like logged.
 	 * @see #e
 	 */
 	public static void e(String msg) {
@@ -129,7 +149,8 @@ public class Logx {
 
 	/**
 	 * Output verbose logs.
-	 * 
+	 *
+	 * @param msg The message you would like logged.
 	 * @see #v
 	 */
 	public static void v(Class<?> clazz, String msg) {
@@ -138,7 +159,8 @@ public class Logx {
 	
 	/**
 	 * Output debug logs.
-	 * 
+	 *
+	 * @param msg The message you would like logged.
 	 * @see #d
 	 */
 	public static void d(Class<?> clazz, String msg) {
@@ -147,7 +169,9 @@ public class Logx {
 	
 	/**
 	 * Output information logs.
-	 * 
+	 *
+	 * @param clazz the name of class will be used as tag
+	 * @param msg   The message you would like logged.
 	 * @see #i
 	 */
 	public static void i(Class<?> clazz, String msg) {
@@ -156,7 +180,9 @@ public class Logx {
 	
 	/**
 	 * Output warning logs.
-	 * 
+	 *
+	 * @param clazz the name of class will be used as tag
+	 * @param msg   The message you would like logged.
 	 * @see #w
 	 */
 	public static void w(Class<?> clazz, String msg) {
@@ -165,7 +191,9 @@ public class Logx {
 	
 	/**
 	 * Output error logs.
-	 * 
+	 *
+	 * @param clazz the name of class will be used as tag
+	 * @param msg   The message you would like logged.
 	 * @see #e
 	 */
 	public static void e(Class<?> clazz, String msg) {

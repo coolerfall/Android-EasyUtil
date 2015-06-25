@@ -75,7 +75,7 @@ public class FileUtils {
 	 * Read content from specified file.
 	 * 
 	 * @param  filename absolute file path
-	 * @return content content
+	 * @return          content content
 	 */
 	public static String read(String filename) {
 		try {

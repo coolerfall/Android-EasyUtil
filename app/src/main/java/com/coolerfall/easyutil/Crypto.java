@@ -36,7 +36,7 @@ public class Crypto {
 		 * Encrypt string.
 		 * 
 		 * @param text the string to be encrypted
-		 * @return the encrypted an encoded string
+		 * @return     the encrypted an encoded string
 		 */
 		@SuppressLint("TrulyRandom")
 		public static String encrypt(String text) {
@@ -82,10 +82,10 @@ public class Crypto {
 		 * Decrypt string.
 		 * 
 		 * @param  text the string to be decrypted
-		 * @return the decrypted string
+		 * @return      the decrypted string
 		 * @throws Exception
 		 */
-		public static String decrypt(String text) throws Exception {
+		public static String decrypt(String text) {
 			/* get iv and key */
 			byte[] keyBytes = SECRECT_KEY.getBytes();
 			byte[] iv = new byte[16];
@@ -106,7 +106,7 @@ public class Crypto {
 			}
 
 			if (text == null || text.length() == 0) {
-				throw new Exception("Empty string");
+				return "";
 			}
 
 			byte[] decrypted;
@@ -117,7 +117,7 @@ public class Crypto {
 				cipher.init(Cipher.DECRYPT_MODE, keyspec, ivspec);
 				decrypted = cipher.doFinal(decode);
 			} catch (Exception e) {
-				throw new Exception("[decrypt] " + e.getMessage());
+				return "";
 			}
 
 			return new String(decrypted);
@@ -127,7 +127,7 @@ public class Crypto {
 		 * Convert byte to hex.
 		 * 
 		 * @param  data the data in byte
-		 * @return the hex string
+		 * @return      the hex string
 		 */
 		public static String byteToHex(byte[] data) {
 			if (data == null) {
@@ -150,7 +150,7 @@ public class Crypto {
 		 * Convert hex to byte.
 		 * 
 		 * @param  str the data in byte
-		 * @return the byte
+		 * @return     the hex string in byte
 		 */
 		public static byte[] hexToByte(String str) {
 			if (str == null) {
@@ -199,6 +199,13 @@ public class Crypto {
 			}
 		}
 
+		/**
+		 * Decypt text with specified key.
+		 *
+		 * @param  key  the key to encryt
+		 * @param  text original string
+		 * @return      decrypted base64 string
+		 */
 		public static String decrypt(String key, String text) {
 			byte[] keyBytes = key.getBytes();
 			try {
