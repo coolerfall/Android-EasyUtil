@@ -83,7 +83,6 @@ public class Crypto {
 		 * 
 		 * @param  text the string to be decrypted
 		 * @return      the decrypted string
-		 * @throws Exception
 		 */
 		public static String decrypt(String text) {
 			/* get iv and key */
