@@ -3,12 +3,10 @@ package com.coolerfall.easyutil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * Caculate hash string of file or string.
@@ -43,7 +41,7 @@ public class Hash {
 			BigInteger bi = new BigInteger(1, md.digest());
 
 			return bi.toString(16);
-		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+		} catch (Exception e) {
 			return NULL;
 		}
 	}
