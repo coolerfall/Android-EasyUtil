@@ -39,7 +39,25 @@ public class NetUtils {
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo info = manager.getActiveNetworkInfo();
 
-		return info == null ? false : info.isAvailable();
+		return info != null && info.isAvailable();
+	}
+
+	/**
+	 * To check whether current network is wifi.
+	 *
+	 * @param  context context
+	 * @return         true if network if wifi, otherwise return false
+	 */
+	protected static boolean isWifiAvailable(Context context) {
+		if (context == null) {
+			return false;
+		}
+
+		ConnectivityManager manager = (ConnectivityManager) context
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo info = manager.getActiveNetworkInfo();
+
+		return info != null && (info.getType() == ConnectivityManager.TYPE_WIFI);
 	}
 
 	/**
