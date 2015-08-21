@@ -1,6 +1,7 @@
 package com.coolerfall.easyutil;
 
 import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 /**
@@ -91,5 +92,24 @@ public class TimeUtils {
 		result = result.replace("SSSS", millisecondStr);
 
 		return result;
+	}
+
+	/**
+	 * Convert time from one format to another format.
+	 *
+	 * @param  oldFormat old format(such as: yyyy-MM-dd HH:mm:ss)
+	 * @param  newFormat new format(such as: yyyy/MM/dd HH:mm:ss)
+	 * @param  time      old formated time
+	 * @return           new formated time
+	 */
+	public static String convertFormat(String oldFormat, String newFormat, String time) {
+		SimpleDateFormat oldFmt = new SimpleDateFormat(oldFormat);
+		SimpleDateFormat newFmt = new SimpleDateFormat(newFormat);
+
+		try {
+			return newFmt.format(oldFmt.parse(time));
+		} catch (ParseException e) {
+			return null;
+		}
 	}
 }
