@@ -12,12 +12,14 @@ import java.security.MessageDigest;
  * Caculate hash string of file or string.
  *
  * @author Vincent Cheung
- * @since  Dec. 23, 2014
+ * @since Dec. 23, 2014
  */
 public class Hash {
 	private static final String NULL = "";
 
-	/** hash type */
+	/**
+	 * hash type
+	 */
 	private enum HashType {
 		MD5("MD5"),
 		SHA1("SHA1");
@@ -33,20 +35,30 @@ public class Hash {
 		}
 	}
 
-	/** cacultate string to hash string */
+	/**
+	 * cacultate string to hash string
+	 */
 	private static String strHash(HashType type, String origin) {
 		try {
 			MessageDigest md = MessageDigest.getInstance(type.getValue());
 			md.update(origin.getBytes("UTF-8"));
 			BigInteger bi = new BigInteger(1, md.digest());
 
-			return bi.toString(16);
+			String hash = bi.toString(16);
+			int length = type == HashType.MD5 ? 32 : 40;
+			while (hash.length() < length) {
+				hash = "0" + hash;
+			}
+
+			return hash;
 		} catch (Exception e) {
 			return NULL;
 		}
 	}
 
-	/** caculate file to hash string */
+	/**
+	 * caculate file to hash string
+	 */
 	private static String fileHash(HashType type, String filePath) {
 		File file = new File(filePath);
 		if (file == null || !file.exists()) {
@@ -59,11 +71,16 @@ public class Hash {
 		try {
 			fis = new FileInputStream(file);
 			MappedByteBuffer mbf = fis.getChannel().map(
-					FileChannel.MapMode.READ_ONLY, 0, file.length());
+				FileChannel.MapMode.READ_ONLY, 0, file.length());
 			MessageDigest md = MessageDigest.getInstance(type.getValue());
 			md.update(mbf);
 			BigInteger bi = new BigInteger(1, md.digest());
 			result = bi.toString(16);
+
+			int length = type == HashType.MD5 ? 32 : 40;
+			while (result.length() < length) {
+				result = "0" + result;
+			}
 		} catch (Exception e) {
 			return NULL;
 		} finally {
@@ -86,8 +103,8 @@ public class Hash {
 		/**
 		 * Used to encrypt string to md5 hash.
 		 *
-		 * @param  origin the string to be encrpted
-		 * @return        hash string
+		 * @param origin the string to be encrpted
+		 * @return hash string
 		 */
 		public static String str(String origin) {
 			return strHash(HashType.MD5, origin);
@@ -97,8 +114,8 @@ public class Hash {
 		 * Caculate md5 hash of specifed file. This may spend some time,
 		 * use new Thread if necessary.
 		 *
-		 * @param  filePath the path of file
-		 * @return          md5 hash string
+		 * @param filePath the path of file
+		 * @return md5 hash string
 		 */
 		public static String file(String filePath) {
 			return fileHash(HashType.MD5, filePath);
@@ -112,8 +129,8 @@ public class Hash {
 		/**
 		 * Used to encrypt string to sha1 hash.
 		 *
-		 * @param  origin the string to be encrpted
-		 * @return        sha1 hash string
+		 * @param origin the string to be encrpted
+		 * @return sha1 hash string
 		 */
 		public static String str(String origin) {
 			return strHash(HashType.SHA1, origin);
@@ -123,8 +140,8 @@ public class Hash {
 		 * Caculate sha1 hash of specifed file. This may spend some time,
 		 * use new Thread if necessary.
 		 *
-		 * @param  filePath the path of file
-		 * @return          sha1 hash string
+		 * @param filePath the path of file
+		 * @return sha1 hash string
 		 */
 		public static String file(String filePath) {
 			return fileHash(HashType.SHA1, filePath);
